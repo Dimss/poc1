@@ -6,6 +6,9 @@ channel = connection.channel()
 
 channel.queue_declare(queue='hello')
 
+channel.basic_publish(exchange='', routing_key='hello', body="https://www.google.com")
+channel.basic_publish(exchange='', routing_key='hello', body="https://www.cnn.com")
+
 channel.basic_publish(exchange='', routing_key='hello', body="https://www.gov.il")
 channel.basic_publish(exchange='', routing_key='hello', body="https://www.pmo.gov.il")
 channel.basic_publish(exchange='', routing_key='hello', body="https://www.police.gov.il")
