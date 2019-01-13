@@ -13,6 +13,7 @@ channel.queue_declare(queue='hello')
 data = json.loads(requests.get('https://raw.githubusercontent.com/abarlev/poc1/master/SiteList.json').text)
 
 for i in range(100):
+    print("published data[{0}] = {1}".format(i, data[i]))
     channel.basic_publish(exchange='', routing_key='hello', body=data[i])
     print("published data[{0}] = {1}".format(i, data[i]))
 
