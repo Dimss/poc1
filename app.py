@@ -15,7 +15,7 @@ data = json.loads(requests.get('https://raw.githubusercontent.com/abarlev/poc1/m
 for i in range(100):
     print("published data[{0}] = {1}".format(i, data[i]))
     serialized=json.dumps(data[i])
-    channel.basic_publish(exchange='', routing_key='hello', body=serialized))
+    channel.basic_publish(exchange='', routing_key='hello', body=serialized)
     print("published data[{0}] = {1}".format(i, serialized))
 
 #channel.basic_publish(exchange='', routing_key='hello', body="https://www.google.com")
