@@ -6,7 +6,7 @@ import requests
 connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbitmq.check-sites.svc.cluster.local'))
 channel = connection.channel()
 
-#print("NEW VERSION!!!")
+print("NEW VERSION!!!")
 
 channel.queue_declare(queue='hello')
 
