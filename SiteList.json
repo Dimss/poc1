@@ -1974,34 +1974,6 @@
         "Misc": "Mapi"
     },
     {
-        "Site": "https://mapi.saar.gov.il/SaarLite/dist.html?roid=09000af0800b3917 ",
-        "Title": "\u05e1\u05e2\"\u05e8 \u05dc\u05d9\u05d9\u05d8",
-        "URLafterRedirect": "https://mapi.saar.gov.il/SaarLite/dist.html?roid=09000af0800b3917",
-        "TimeToReport": "20",
-        "Misc": "Mapi"
-    },
-    {
-        "Site": "https://mops.saar.gov.il/saar/component/exsearch?unitlayer=lishka%26docType=gov_document%26docAttrNames=gov_id%26docAttrValues=5700-2222-2017-011276",
-        "Title": "\u05e1\u05e2\u05e8",
-        "URLafterRedirect": "https://mops.saar.gov.il/saar/component/main/?unitlayer=lishka&docType=gov_document&docAttrNames=gov_id&docAttrValues=5700-2222-2017-011276",
-        "TimeToReport": "20",
-        "Misc": "Mops"
-    },
-    {
-        "Site": "https://mops.saar.gov.il/SaarLite/dist.html?roid=090025e48007846b",
-        "Title": "\u05e1\u05e2\"\u05e8 \u05dc\u05d9\u05d9\u05d8",
-        "URLafterRedirect": "https://mops.saar.gov.il/SaarLite/dist.html?roid=090025e48007846b",
-        "TimeToReport": "20",
-        "Misc": "Mapi"
-    },
-    {
-        "Site": "https://moch.saar.gov.il/saar/component/exsearch?unitlayer=legal_app%26docType=gov_document%26docAttrNames=gov_id%26docAttrValues=2900-1000-2017-000554",
-        "Title": "\u05e1\u05e2\u05e8",
-        "URLafterRedirect": "https://moch.saar.gov.il/saar/component/main/?unitlayer=legal_app&docType=gov_document&docAttrNames=gov_id&docAttrValues=2900-1000-2017-000554",
-        "TimeToReport": "20",
-        "Misc": "Moch"
-    },
-    {
         "Site": "https://moch.saar.gov.il/SaarLite/dist.html?roid=090026488001f540",
         "Title": "\u05e1\u05e2\"\u05e8 \u05dc\u05d9\u05d9\u05d8",
         "URLafterRedirect": "https://moch.saar.gov.il/SaarLite/dist.html?roid=090026488001f540",
