@@ -12,7 +12,7 @@ channel.queue_declare(queue='sites')
 
 data = json.loads(requests.get('https://raw.githubusercontent.com/abarlev/poc1/master/SiteList.json').text)
 
-for row in rata:
+for row in data:
     serialized=json.dumps(row)
     channel.basic_publish(exchange='', routing_key='sites', body=serialized)
     print("published data[{0}] = {1}".format(i, serialized))
