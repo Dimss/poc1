@@ -8,14 +8,13 @@ channel = connection.channel()
 
 print("NEW VERSION!!! serialized the json payload")
 
-channel.queue_declare(queue='hello')
+channel.queue_declare(queue='sites')
 
 data = json.loads(requests.get('https://raw.githubusercontent.com/abarlev/poc1/master/SiteList.json').text)
 
-for i in range(100):
-    print("published data[{0}] = {1}".format(i, data[i]))
-    serialized=json.dumps(data[i])
-    channel.basic_publish(exchange='', routing_key='hello', body=serialized)
+for row in rata:
+    serialized=json.dumps(row)
+    channel.basic_publish(exchange='', routing_key='sites', body=serialized)
     print("published data[{0}] = {1}".format(i, serialized))
 
 #channel.basic_publish(exchange='', routing_key='hello', body="https://www.google.com")
