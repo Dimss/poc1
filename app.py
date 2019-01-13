@@ -16,7 +16,7 @@ for i in range(100):
     print("published data[{0}] = {1}".format(i, data[i]))
     serialized=json.dumps(data[i])
     channel.basic_publish(exchange='', routing_key='hello', body=serialized))
-    print("published data[{0}] = {1}".format(i, body))
+    print("published data[{0}] = {1}".format(i, serialized))
 
 #channel.basic_publish(exchange='', routing_key='hello', body="https://www.google.com")
 #channel.basic_publish(exchange='', routing_key='hello', body="https://www.cnn.com")
