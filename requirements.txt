@@ -1,3 +1,4 @@
 pika
 pyyaml
 Requests
+html-testRunner
