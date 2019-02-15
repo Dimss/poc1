@@ -18,19 +18,18 @@ pipeline {
                     openshift.withCluster() {
                         openshift.withProject() {
                             def testDepTemplate = readFile('ocp/ci/unittests-resources-template.yaml')
-                            def commitHash = checkout(scm).GIT_COMMIT
-                            def rabbitmqName = "rabbitmq-${commitHash.substring(0, 7)}"
-                            def models = openshift.process(testDepTemplate, "-p=RABBITMQ_NAME=${rabbitmqName}")
-                            openshift.create(models)
+                            env.shortCommit = checkout(scm).GIT_COMMIT.substring(0, 7)
+                            env.rabbitmqName = "rabbitmq-${env.shortCommit}"
+                            env.models = openshift.process(testDepTemplate, "-p=RABBITMQ_NAME=${rabbitmqName}")
+                            openshift.create(env.models)
                             def deployment = openshift.selector("deployment/${rabbitmqName}")
-                            deployment.untilEach(1) { // We want a minimum of 1 build
+                            deployment.untilEach(1) {
                                 echo "${it.object()}"
                                 return it.object().status.readyReplicas == 1
                             }
-                            openshift.delete(models)
                             echo "${deployment}"
-                            echo "${models}"
-                            echo "${commitHash}"
+                            echo "${env.models}"
+                            echo "${env.shortCommit}"
                             echo "${currentBuild.number}"
 
                         }
@@ -44,13 +43,24 @@ pipeline {
                 script {
                     sh """
                         PROFILE=prod
-                        RABBITMQ_IP="rabbitmq-${checkout(scm).GIT_COMMIT.substring(0, 7)}"
-                        RABBITMQ_QUEUE="sites-${checkout(scm).GIT_COMMIT.substring(0, 7)}"
+                        RABBITMQ_IP="${env.rabbitmqName}"
+                        RABBITMQ_QUEUE="sites-${env.shortCommit}"
                         pipenv run test
                     """
                 }
             }
+        }
 
+        stage("Cleanup test resources") {
+            steps {
+                script {
+                    openshift.withCluster() {
+                        openshift.withProject() {
+                            openshift.delete(env.models)
+                        }
+                    }
+                }
+            }
         }
 
 
