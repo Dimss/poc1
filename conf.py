@@ -2,7 +2,8 @@ import os
 from configparser import ConfigParser
 
 # Load configs file
-config = ConfigParser(os.environ)
+config = ConfigParser(os.environ, strict=False)
+
 app_ini_file = 'dev.app.ini'
 PROFILE = os.environ.get('PROFILE')
 if PROFILE and os.environ['PROFILE'] == 'prod':

@@ -12,8 +12,8 @@ PyYAML = "*"
 html-testRunner = "*"
 
 [requires]
-python_version = ">=3.6"
+python_version = "3.6"
 
 [scripts]
 start  = "python app.py"
-tests  = "python test.py"
+test  = "python test.py"

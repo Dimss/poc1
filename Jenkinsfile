@@ -35,8 +35,7 @@ pipeline {
 //                                    echo "${o}"
 //                                }
 //                            }
-                            sh "ls -all /opt/rh/rh-python36/"
-                            sh "pip install -r requirements.txt"
+                            sh "pipenv install"
                         }
                     }
                 }
