@@ -41,5 +41,13 @@ pipeline {
                 }
             }
         }
+        stage("Run tests"){
+            steps{
+                script{
+                    sh "pipenv run test"
+                }
+            }
+
+        }
     }
 }
