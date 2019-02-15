@@ -50,8 +50,9 @@ pipeline {
                             def commitHash = checkout(scm).GIT_COMMIT
                             def rabbitmqName = "rabbitmq-${commitHash.substring(0, 7)}"
                             def models = openshift.process(testDepTemplate, "-p=RABBITMQ_NAME=${rabbitmqName}")
-                            def createdObj = openshift.create(models)
-                            createdObj.untilEach(2) { // We want a minimum of 1 build
+//                            def createdObj = openshift.create(models)
+                            def deployment = openshift.selector( "deployment/${rabbitmqName}" )
+                            deployment.untilEach(1) { // We want a minimum of 1 build
 
                                 // Unlike watch(), untilEach binds 'it' to a Selector for a single object.
                                 // Thus, untilEach will only terminate when all selected objects satisfy this
