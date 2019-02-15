@@ -56,6 +56,7 @@ pipeline {
                             echo "${commitHash}"
                             echo "${test}"
                             echo "${currentBuild.number}"
+                            echo "${commitHash.substring(0, 6)}"
                         }
                     }
 
