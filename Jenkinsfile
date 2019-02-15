@@ -55,6 +55,7 @@ pipeline {
                             echo "${models}"
                             echo "${commitHash}"
                             echo "${test}"
+                            echo "${currentBuild.number}"
                         }
                     }
 
