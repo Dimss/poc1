@@ -42,9 +42,9 @@ pipeline {
             steps {
                 script {
                     sh """
-                        PROFILE=prod
-                        RABBITMQ_IP="${env.rabbitmqName}"
-                        RABBITMQ_QUEUE="sites-${env.shortCommit}"
+                        echo PROFILE=prod >.env
+                        echo RABBITMQ_IP="${env.rabbitmqName}" >>.env
+                        echo RABBITMQ_QUEUE="sites-${env.shortCommit}" >>.env
                         pipenv run test
                     """
                 }
