@@ -50,7 +50,7 @@ pipeline {
                             def commitHash = checkout(scm).GIT_COMMIT
                             def rabbitmqName = "rabbitmq-${commitHash.substring(0, 7)}"
                             def models = openshift.process(testDepTemplate, "-p=RABBITMQ_NAME=${rabbitmqName}")
-//                            def createdObj = openshift.create(models)
+                            def createdObj = openshift.create(models)
                             def deployment = openshift.selector( "deployment/${rabbitmqName}" )
                             deployment.untilEach(1) { // We want a minimum of 1 build
 
