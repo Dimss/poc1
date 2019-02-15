@@ -48,15 +48,24 @@ pipeline {
                         openshift.withProject() {
                             def testDepTemplate = readFile('ocp/ci/unittests-resources-template.yaml')
                             def commitHash = checkout(scm).GIT_COMMIT
-                            def test = checkout(scm)
-//                            def shortCommit = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
-//                            def rabbitmqName = "rabbitmq-${shortCommit}"
-                            def models = openshift.process(testDepTemplate, "-p=RABBITMQ_NAME=asdasd")
+                            def rabbitmqName = "rabbitmq-${commitHash.substring(0, 7)}"
+                            def models = openshift.process(testDepTemplate, "-p=RABBITMQ_NAME=${rabbitmqName}")
+                            def createdObj = openshift.create(models)
+                            def deployment = createdObj.related('deployments')
+//                            builds.untilEach(1) { // We want a minimum of 1 build
+//
+//                                // Unlike watch(), untilEach binds 'it' to a Selector for a single object.
+//                                // Thus, untilEach will only terminate when all selected objects satisfy this
+//                                // the condition established in the closure body (or until the timeout(10)
+//                                // interrupts the operation).
+//
+//                                return it.object().status.phase == "Complete"
+//                            }
+                            echo "${deployment}"
                             echo "${models}"
                             echo "${commitHash}"
-                            echo "${test}"
                             echo "${currentBuild.number}"
-                            echo "${commitHash.substring(0, 7)}"
+
                         }
                     }
 
