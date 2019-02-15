@@ -40,24 +40,26 @@ pipeline {
                     }
                 }
             }
-        }
-        stage("Deploy tests dependencies")
-        steps {
-            script {
-                def testDepTemplate = readFile('ocp/ci/unittests-resources-template.yaml')
-                def shortCommit = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
-                def rabbitmqName = "rabbitmq-${shortCommit}"
-                def models = openshift.process(testDepTemplate, "-p=RABBITMQ_NAME=${rabbitmqName}")
-                echo "${models}"
-            }
-        }
-        stage("Run tests") {
-            steps {
-                script {
-//                    sh "pipenv run test"
+            stage("Deploy tests dependencies") {
+                steps {
+                    script {
+                        def testDepTemplate = readFile('ocp/ci/unittests-resources-template.yaml')
+                        def shortCommit = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
+                        def rabbitmqName = "rabbitmq-${shortCommit}"
+                        def models = openshift.process(testDepTemplate, "-p=RABBITMQ_NAME=${rabbitmqName}")
+                        echo "${models}"
+                    }
                 }
             }
+            stage("Run tests") {
+                steps {
+                    script {
+//                    sh "pipenv run test"
+                    }
+                }
 
+            }
         }
+
     }
 }
