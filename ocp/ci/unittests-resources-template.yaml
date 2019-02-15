@@ -46,8 +46,8 @@ objects:
           livenessProbe:
             tcpSocket:
               port: 5672
-            initialDelaySeconds: 15
-            periodSeconds: 20
+            initialDelaySeconds: 0
+            periodSeconds: 3
 parameters:
 - description: RabbitMQ name
   displayName: RabbitMQ name for Deployment and Service objects
