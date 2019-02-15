@@ -21,7 +21,7 @@ pipeline {
                             env.shortCommit = checkout(scm).GIT_COMMIT.substring(0, 7)
                             env.rabbitmqName = "rabbitmq-${env.shortCommit}"
                             def models = openshift.process(testDepTemplate, "-p=RABBITMQ_NAME=${rabbitmqName}")
-                            openshift.create(env.models)
+                            openshift.create(models)
                             def deployment = openshift.selector("deployment/${rabbitmqName}")
                             deployment.untilEach(1) {
                                 echo "${it.object()}"
