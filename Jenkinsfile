@@ -68,10 +68,15 @@ pipeline {
     }
     post {
         always {
-            def testDepTemplate = readFile('ocp/ci/unittests-resources-template.yaml')
-            def models = openshift.process(testDepTemplate, "-p=RABBITMQ_NAME=${env.rabbitmqName}")
-            openshift.delete(models)
+            script {
+                openshift.withCluster() {
+                    openshift.withProject() {
+                        def testDepTemplate = readFile('ocp/ci/unittests-resources-template.yaml')
+                        def models = openshift.process(testDepTemplate, "-p=RABBITMQ_NAME=${env.rabbitmqName}")
+                        openshift.delete(models)
+                    }
+                }
+            }
         }
-
     }
 }
