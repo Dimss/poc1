@@ -51,7 +51,16 @@ pipeline {
                             def rabbitmqName = "rabbitmq-${commitHash.substring(0, 7)}"
                             def models = openshift.process(testDepTemplate, "-p=RABBITMQ_NAME=${rabbitmqName}")
                             def createdObj = openshift.create(models)
-                            def deployment = createdObj.related('deployments')
+                            createdObj.untilEach(2) { // We want a minimum of 1 build
+
+                                // Unlike watch(), untilEach binds 'it' to a Selector for a single object.
+                                // Thus, untilEach will only terminate when all selected objects satisfy this
+                                // the condition established in the closure body (or until the timeout(10)
+                                // interrupts the operation).
+                                echo "${it.object()}"
+                                return it.object().status.phase == "Complete"
+                            }
+//                            def deployment = createdObj.related('deployments')
 //                            builds.untilEach(1) { // We want a minimum of 1 build
 //
 //                                // Unlike watch(), untilEach binds 'it' to a Selector for a single object.
