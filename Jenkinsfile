@@ -19,7 +19,8 @@ pipeline {
                         openshift.withProject() {
                             def testDepTemplate = readFile('ocp/ci/unittests-resources-template.yaml')
                             env.shortCommit = checkout(scm).GIT_COMMIT.substring(0, 7)
-                            env.rabbitmqName = "rabbitmq-${env.shortCommit}"
+//                            env.rabbitmqName = "rabbitmq-${env.shortCommit}"
+                            env.rabbitmqName = "rabbitmq"
                             def models = openshift.process(testDepTemplate, "-p=RABBITMQ_NAME=${rabbitmqName}")
                             openshift.create(models)
                             def deployment = openshift.selector("deployment/${rabbitmqName}")
