@@ -59,8 +59,9 @@ pipeline {
                                 // the condition established in the closure body (or until the timeout(10)
                                 // interrupts the operation).
                                 echo "${it.object()}"
-                                return it.object().status.replicas == 1
+                                return it.object().status.readyReplicas == 1
                             }
+                            openshift.delete(models)
 //                            def deployment = createdObj.related('deployments')
 //                            builds.untilEach(1) { // We want a minimum of 1 build
 //
