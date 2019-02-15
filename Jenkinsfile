@@ -44,8 +44,7 @@ pipeline {
                     sh """
                         echo PROFILE=prod >.env
                         echo RABBITMQ_IP="${env.rabbitmqName}" >>.env
-                        echo RABBITMQ_IP="rabbitmq" >>.env
-                        echo RABBITMQ_QUEUE="sites" >>.env
+                        echo RABBITMQ_QUEUE="sites-${env.shortCommit}" >>.env
                         pipenv run test
                     """
                 }
