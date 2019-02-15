@@ -20,7 +20,7 @@ pipeline {
                             def testDepTemplate = readFile('ocp/ci/unittests-resources-template.yaml')
                             env.shortCommit = checkout(scm).GIT_COMMIT.substring(0, 7)
                             env.rabbitmqName = "rabbitmq-${env.shortCommit}"
-                            env.models = openshift.process(testDepTemplate, "-p=RABBITMQ_NAME=${rabbitmqName}")
+                            def models = openshift.process(testDepTemplate, "-p=RABBITMQ_NAME=${rabbitmqName}")
                             openshift.create(env.models)
                             def deployment = openshift.selector("deployment/${rabbitmqName}")
                             deployment.untilEach(1) {
@@ -28,7 +28,7 @@ pipeline {
                                 return it.object().status.readyReplicas == 1
                             }
                             echo "${deployment}"
-                            echo "${env.models}"
+                            echo "${models}"
                             echo "${env.shortCommit}"
                             echo "${currentBuild.number}"
 
