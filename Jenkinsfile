@@ -57,14 +57,14 @@ pipeline {
                 }
             }
         }
-        stage("Run tests") {
-            steps {
-                script {
+//        stage("Run tests") {
+//            steps {
+//                script {
 //                    sh "pipenv run test"
-                }
-            }
-
-        }
+//                }
+//            }
+//
+//        }
 
 
     }
