@@ -17,20 +17,20 @@ pipeline {
                 script {
                     openshift.withCluster() {
                         openshift.withProject() {
-//                            def testDepTemplate = readFile('ocp/ci/unittests-resources-template.yaml')
-//                            env.shortCommit = checkout(scm).GIT_COMMIT.substring(0, 7)
-//                            env.rabbitmqName = "rabbitmq-${env.shortCommit}"
-//                            def models = openshift.process(testDepTemplate, "-p=RABBITMQ_NAME=${rabbitmqName}")
-//                            openshift.create(models)
-//                            def deployment = openshift.selector("deployment/${rabbitmqName}")
-//                            deployment.untilEach(1) {
-//                                echo "${it.object()}"
-//                                return it.object().status.readyReplicas == 1
-//                            }
-//                            echo "${deployment}"
-//                            echo "${models}"
-//                            echo "${env.shortCommit}"
-//                            echo "${currentBuild.number}"
+                            def testDepTemplate = readFile('ocp/ci/unittests-resources-template.yaml')
+                            env.shortCommit = checkout(scm).GIT_COMMIT.substring(0, 7)
+                            env.rabbitmqName = "rabbitmq-${env.shortCommit}"
+                            def models = openshift.process(testDepTemplate, "-p=RABBITMQ_NAME=${rabbitmqName}")
+                            openshift.create(models)
+                            def deployment = openshift.selector("deployment/${rabbitmqName}")
+                            deployment.untilEach(1) {
+                                echo "${it.object()}"
+                                return it.object().status.readyReplicas == 1
+                            }
+                            echo "${deployment}"
+                            echo "${models}"
+                            echo "${env.shortCommit}"
+                            echo "${currentBuild.number}"
 
                         }
                     }
@@ -52,17 +52,19 @@ pipeline {
             }
         }
 
-//        stage("Cleanup test resources") {
-//            steps {
-//                script {
-//                    openshift.withCluster() {
-//                        openshift.withProject() {
-//                            openshift.delete(env.models)
-//                        }
-//                    }
-//                }
-//            }
-//        }
+        stage("Cleanup test resources") {
+            steps {
+                script {
+                    openshift.withCluster() {
+                        openshift.withProject() {
+                            def testDepTemplate = readFile('ocp/ci/unittests-resources-template.yaml')
+                            def models = openshift.process(testDepTemplate, "-p=RABBITMQ_NAME=${env.rabbitmqName}")
+                            openshift.delete(models)
+                        }
+                    }
+                }
+            }
+        }
 
 
     }
