@@ -8,11 +8,7 @@ pipeline {
         stage("Install PIP dependencies") {
             steps {
                 script {
-                    openshift.withCluster() {
-                        openshift.withProject() {
-//                            sh "pipenv install"
-                        }
-                    }
+                    sh "pipenv install"
                 }
             }
         }
@@ -46,18 +42,12 @@ pipeline {
         stage("Run tests") {
             steps {
                 script {
-                    env.PROFILE = "PROD"
-                    env.RABBITMQ_IP = "rabbitmq-${checkout(scm).GIT_COMMIT.substring(0, 7)}"
-                    env.RABBITMQ_QUEUE = "sites-${checkout(scm).GIT_COMMIT.substring(0, 7)}"
                     sh """
-                        PROFILE=PROD
+                        PROFILE=prod
                         RABBITMQ_IP="rabbitmq-${checkout(scm).GIT_COMMIT.substring(0, 7)}"
                         RABBITMQ_QUEUE="sites-${checkout(scm).GIT_COMMIT.substring(0, 7)}"
-                        echo \$PROFILE
-                        echo \$RABBITMQ_IP
-                        echo \$RABBITMQ_QUEUE
+                        pipenv run test
                     """
-//                    sh "pipenv run test"
                 }
             }
 
