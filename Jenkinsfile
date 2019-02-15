@@ -51,17 +51,17 @@ pipeline {
             }
         }
 
-        stage("Cleanup test resources") {
-            steps {
-                script {
-                    openshift.withCluster() {
-                        openshift.withProject() {
-                            openshift.delete(env.models)
-                        }
-                    }
-                }
-            }
-        }
+//        stage("Cleanup test resources") {
+//            steps {
+//                script {
+//                    openshift.withCluster() {
+//                        openshift.withProject() {
+//                            openshift.delete(env.models)
+//                        }
+//                    }
+//                }
+//            }
+//        }
 
 
     }
