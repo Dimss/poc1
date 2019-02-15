@@ -35,7 +35,7 @@ pipeline {
 //                                    echo "${o}"
 //                                }
 //                            }
-
+                            sh "whoami"
                             sh "pip install -r requirements.txt"
                         }
                     }
