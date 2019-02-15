@@ -11,13 +11,13 @@ pipeline {
                 script {
                     openshift.withCluster() {
                         openshift.withProject() {
-                            def ciTemplate = readFile('ocp/ci/ci-template.yaml')
-                            def models = openshift.process(
-                                    "openshift//postgresql-ephemeral",
-                                    "-p=POSTGRESQL_DATABASE=postgres",
-                                    "-p=POSTGRESQL_PASSWORD=postgres",
-                                    "-p=POSTGRESQL_USER=postgres",
-                                    "-p=DATABASE_SERVICE_NAME=pg")
+//                            def ciTemplate = readFile('ocp/ci/ci-template.yaml')
+//                            def models = openshift.process(
+//                                    "openshift//postgresql-ephemeral",
+//                                    "-p=POSTGRESQL_DATABASE=postgres",
+//                                    "-p=POSTGRESQL_PASSWORD=postgres",
+//                                    "-p=POSTGRESQL_USER=postgres",
+//                                    "-p=DATABASE_SERVICE_NAME=pg")
 //                            openshift.create(models)
 //                            def scmUrl = scm.getUserRemoteConfigs()[0].getUrl()
 //                            def currentOcpProject = openshift.project()
