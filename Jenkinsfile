@@ -2,7 +2,7 @@ pipeline {
 //    agent any
     agent {
         node {
-            label 'maven'
+            label 'python36'
         }
     }
     stages {
