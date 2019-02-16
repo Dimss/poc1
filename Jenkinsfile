@@ -1,5 +1,5 @@
 def getJobName(jobName) {
-    jobNameList = jobName.split("/")
+    jobNameList = env.JOB_NAME.split("/")
     if (jobNameList.size() > 0) {
         return jobNameList[jobNameList.size() - 1]
     } else {
@@ -9,7 +9,7 @@ def getJobName(jobName) {
 
 def getAppName() {
     def shortCommit = checkout(scm).GIT_COMMIT.substring(0, 7)
-    echo  "${getJobName(env.JOB_NAME)}-${shortCommit}"
+    return "${getJobName()}-${shortCommit}"
 }
 
 pipeline {
@@ -90,10 +90,10 @@ pipeline {
 //                                    "-p=DOCKER_IMAGE_NAME="
 //                            )
 //                            openshift.delete(models)
-                            echo "${env.JOB_NAME}"
-                            def jobName = getJobName(env.JOB_NAME)
-                            getAppName()
-                            echo "${jobName}"
+//                            echo "${env.JOB_NAME}"
+//                            def jobName = getJobName()
+//                            getAppName()
+                            echo "${getAppName()}"
                         }
                     }
                 }
