@@ -7,6 +7,10 @@ def getJobName(jobName) {
     }
 }
 
+def getAppName() {
+    echo "${checkout(scm).GIT_COMMIT.substring(0, 7)}"
+}
+
 pipeline {
     agent {
         node {
@@ -87,22 +91,16 @@ pipeline {
 //                            openshift.delete(models)
                             echo "${env.JOB_NAME}"
                             def jobName = getJobName(env.JOB_NAME)
+                            getAppName()
                             echo "${jobName}"
-//                            def jobName = env.JOB_NAME.split("/")
-//                            echo "${jobName}"
-//                            if (jobName.size() > 0) {
-//                                echo "In jobName.size() > 0"
-//                                echo "${jobName[jobName.size() - 1]}"
-//                            } else {
-//                                echo "in else"
-//                                echo "${jobName}"
-//                            }
                         }
                     }
                 }
             }
         }
     }
+
+
     post {
         failure {
             script {
