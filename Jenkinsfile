@@ -76,7 +76,7 @@ pipeline {
 //                                    "-p=DOCKER_IMAGE_NAME="
 //                            )
 //                            openshift.delete(models)
-                            echo "${currentBuild}"
+                            echo "${currentBuild.object()}"
                             echo "${currentBuild.displayName}"
                         }
                     }
