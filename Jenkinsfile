@@ -8,7 +8,8 @@ def getJobName(jobName) {
 }
 
 def getAppName() {
-    echo "${checkout(scm).GIT_COMMIT.substring(0, 7)}"
+    def shortCommit = checkout(scm).GIT_COMMIT.substring(0, 7)
+    echo  "${getJobName(env.JOB_NAME)}-${shortCommit}"
 }
 
 pipeline {
