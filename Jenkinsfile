@@ -80,8 +80,10 @@ pipeline {
                             def jobName = "${env.JOB_NAME.split("/")}"
                             echo "${jobName}"
                             if (jobName.size() > 0) {
-                                echo "${jobName.getAt(0)}"
+                                echo "In jobName.size() > 0"
+                                echo "${jobName[0]}"
                             } else {
+                                echo "in else"
                                 echo "${jobName}"
                             }
                         }
