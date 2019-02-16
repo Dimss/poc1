@@ -96,11 +96,10 @@ pipeline {
                                     "-p=GIT_REF=master",
                                     "-p=S2I_BUILDER_ISTAG=python:3.6"
                             )
-                            def json = JsonOutput.toJson(models)
-                            echo "${JsonOutput.prettyPrint(json)}"
+                            echo "${JsonOutput.toJson(models).prettyPrint(json)}"
                             //if you need pretty print (multiline) json
 
-//                            openshift.create(models)
+                            openshift.create(models)
 //                            echo "${env.JOB_NAME}"
 //                            def jobName = getJobName()
 //                            getAppName()
