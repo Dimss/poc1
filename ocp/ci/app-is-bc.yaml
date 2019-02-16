@@ -39,6 +39,7 @@ objects:
         from:
           kind: "ImageStreamTag"
           name: "${S2I_BUILDER_ISTAG}"
+          namespace: openshift
     output:
       to:
         kind: "ImageStreamTag"
