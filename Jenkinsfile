@@ -78,6 +78,7 @@ pipeline {
 //                            openshift.delete(models)
                             echo "${env.JOB_NAME}"
                             def jobName = "${env.JOB_NAME.split("/")}"
+                            echo "${jobName}"
                             if (jobName.size() > 0) {
                                 echo "${jobName.getAt(0)}"
                             } else {
