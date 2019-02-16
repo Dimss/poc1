@@ -1,4 +1,4 @@
-def getJobName(jobName) {
+def getJobName() {
     jobNameList = env.JOB_NAME.split("/")
     if (jobNameList.size() > 0) {
         return jobNameList[jobNameList.size() - 1]
