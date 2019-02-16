@@ -94,7 +94,7 @@ pipeline {
 //                            def jobName = getJobName()
 //                            getAppName()
                             echo "${getAppName()}"
-                            echo "${evn.DOCKER_REGISTRY}"
+                            echo "${env.DOCKER_REGISTRY}"
                         }
                     }
                 }
