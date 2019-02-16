@@ -1,3 +1,12 @@
+def getJobName(jobName) {
+    jobNameList = jobName.split("/")
+    if (jobNameList.size() > 0) {
+        return jobNameList[jobNameList.size() - 1]
+    } else {
+        return jobName
+    }
+}
+
 pipeline {
     agent {
         node {
@@ -77,15 +86,16 @@ pipeline {
 //                            )
 //                            openshift.delete(models)
                             echo "${env.JOB_NAME}"
-                            def jobName = env.JOB_NAME.split("/")
-                            echo "${jobName}"
-                            if (jobName.size() > 0) {
-                                echo "In jobName.size() > 0"
-                                echo "${jobName[jobName.size() - 1]}"
-                            } else {
-                                echo "in else"
-                                echo "${jobName}"
-                            }
+                            def jobName = getJobName(env.JOB_NAME)
+//                            def jobName = env.JOB_NAME.split("/")
+//                            echo "${jobName}"
+//                            if (jobName.size() > 0) {
+//                                echo "In jobName.size() > 0"
+//                                echo "${jobName[jobName.size() - 1]}"
+//                            } else {
+//                                echo "in else"
+//                                echo "${jobName}"
+//                            }
                         }
                     }
                 }
