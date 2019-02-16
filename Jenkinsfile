@@ -76,8 +76,12 @@ pipeline {
 //                                    "-p=DOCKER_IMAGE_NAME="
 //                            )
 //                            openshift.delete(models)
-                            echo "${env.JOB_NAME}"
-//                            echo "${currentBuild.displayName}"
+                            def jobName = "${env.JOB_NAME.split("/")}"
+                            if (jobName.size() > 0) {
+                                echo "${jobName.getAt(0)}"
+                            } else {
+                                echo "${jobName}"
+                            }
                         }
                     }
                 }
