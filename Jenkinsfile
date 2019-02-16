@@ -77,7 +77,7 @@ pipeline {
 //                            )
 //                            openshift.delete(models)
                             echo "${currentBuild.object()}"
-                            echo "${currentBuild.displayName}"
+//                            echo "${currentBuild.displayName}"
                         }
                     }
                 }
