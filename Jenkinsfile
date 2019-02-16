@@ -81,7 +81,7 @@ pipeline {
                             echo "${jobName}"
                             if (jobName.size() > 0) {
                                 echo "In jobName.size() > 0"
-                                echo "${jobName.getAt(jobName.size() - 1)}"
+                                echo "${jobName[jobName.size() - 1]}"
                             } else {
                                 echo "in else"
                                 echo "${jobName}"
