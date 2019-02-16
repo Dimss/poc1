@@ -90,8 +90,9 @@ pipeline {
                                     "-p=DOCKER_REGISTRY=${env.DOCKER_REGISTRY}",
                                     "-p=DOCKER_IMAGE_NAME=/dimssss/poc1",
                                     "-p=DOCKER_IMAGE_TAG=latest",
-                                    "-p=GTI_REPO=${scm.getUserRemoteConfigs()[0].getUrl()}",
-                                    "-p=GTI_REF=master"
+                                    "-p=GIT_REPO=${scm.getUserRemoteConfigs()[0].getUrl()}",
+                                    "-p=GIT_REF=master",
+                                    "-p=S2I_BUILDER_ISTAG=python:3.6"
                             )
                             openshift.create(models)
 //                            echo "${env.JOB_NAME}"
