@@ -96,7 +96,8 @@ pipeline {
                                     "-p=GIT_REF=master",
                                     "-p=S2I_BUILDER_ISTAG=python:3.6"
                             )
-                            echo "${JsonOutput.toJson(models).prettyPrint(json)}"
+//                            def json = JsonOutput.toJson(models)
+                            echo "${JsonOutput.prettyPrint(JsonOutput.toJson(models))}"
                             //if you need pretty print (multiline) json
 
                             openshift.create(models)
