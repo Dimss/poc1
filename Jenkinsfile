@@ -84,12 +84,16 @@ pipeline {
                 script {
                     openshift.withCluster() {
                         openshift.withProject() {
-//                            def icBcTemplate = readFile('ocp/ci/app-is-bc.yaml')
-//                            def models = openshift.process(icBcTemplate,
-//                                    "-p=BC_IS_NAME=${getAppName()}",
-//                                    "-p=DOCKER_IMAGE_NAME="
-//                            )
-//                            openshift.delete(models)
+                            def icBcTemplate = readFile('ocp/ci/app-is-bc.yaml')
+                            def models = openshift.process(icBcTemplate,
+                                    "-p=BC_IS_NAME=${getAppName()}",
+                                    "-p=DOCKER_REGISTRY=${env.DOCKER_REGISTRY}",
+                                    "-p=DOCKER_IMAGE_NAME=/dimssss/poc1",
+                                    "-p=DOCKER_IMAGE_TAG=latest",
+                                    "-p=GTI_REPO=${scm.getUserRemoteConfigs()[0].getUrl()}",
+                                    "-p=GTI_REF=master"
+                            )
+                            openshift.create(models)
 //                            echo "${env.JOB_NAME}"
 //                            def jobName = getJobName()
 //                            getAppName()

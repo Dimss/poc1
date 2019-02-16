@@ -20,8 +20,8 @@ objects:
     tags:
     - from:
         kind: "DockerImage"
-        name: "${DOCKER_IMAGE_NAME}"
-      name: "latest"
+        name: "${DOCKER_REGISTRY}/${DOCKER_IMAGE_NAME}"
+      name: "${DOCKER_IMAGE_TAG}"
       importPolicy:
         scheduled: "true"
 - kind: "BuildConfig"
@@ -51,6 +51,10 @@ parameters:
 - description: Docker registry
   displayName: Docker registry to where to push the docker image
   name: DOCKER_REGISTRY
+  required: true
+- description: Docker image name
+  displayName: Docker image name
+  name: DOCKER_IMAGE_NAME
   required: true
 - description: Docker image tag
   displayName: Docker image tag
