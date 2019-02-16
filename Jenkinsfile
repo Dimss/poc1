@@ -94,7 +94,8 @@ pipeline {
                                     "-p=GIT_REF=master",
                                     "-p=S2I_BUILDER_ISTAG=python:3.6"
                             )
-                            openshift.create(models)
+                            echo "${JsonOutput.toJson(models)}"
+//                            openshift.create(models)
 //                            echo "${env.JOB_NAME}"
 //                            def jobName = getJobName()
 //                            getAppName()
