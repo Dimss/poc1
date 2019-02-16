@@ -42,8 +42,10 @@ objects:
           namespace: openshift
     output:
       to:
-        kind: "ImageStreamTag"
-        name: "${BC_IS_NAME}:${DOCKER_IMAGE_TAG}"
+        kind: "DockerImage"
+        name: "${DOCKER_REGISTRY}${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
+      pushSecret:
+        name: docker-io
 parameters:
 - description: Name for BC and IS
   displayName: The name for the BC and IS
