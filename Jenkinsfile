@@ -86,7 +86,7 @@ pipeline {
                         openshift.withProject() {
 //                            def icBcTemplate = readFile('ocp/ci/app-is-bc.yaml')
 //                            def models = openshift.process(icBcTemplate,
-//                                    "-p=BC_IS_NAME=${env.rabbitmqName}",
+//                                    "-p=BC_IS_NAME=${getAppName()}",
 //                                    "-p=DOCKER_IMAGE_NAME="
 //                            )
 //                            openshift.delete(models)
@@ -94,6 +94,7 @@ pipeline {
 //                            def jobName = getJobName()
 //                            getAppName()
                             echo "${getAppName()}"
+                            echo "${evn.DOCKER_REGISTRY}"
                         }
                     }
                 }

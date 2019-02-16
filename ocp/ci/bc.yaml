@@ -9,4 +9,7 @@ spec:
   strategy:
     jenkinsPipelineStrategy:
       jenkinsfile:
+      env:
+      - name: "DOCKER_REGISTRY"
+        value: "docker.io"
     type: JenkinsPipeline
