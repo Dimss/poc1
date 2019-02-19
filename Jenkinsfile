@@ -10,8 +10,11 @@ def getJobName() {
 }
 
 def getAppName() {
-    def shortCommit = checkout(scm).GIT_COMMIT.substring(0, 7)
-    return "${getJobName()}-${shortCommit}"
+    return "${getJobName()}-${getGitCommitShrotHash()}"
+}
+
+def getGitCommitShrotHash() {
+    return checkout(scm).GIT_COMMIT.substring(0, 7)
 }
 
 pipeline {
@@ -90,20 +93,14 @@ pipeline {
                             def models = openshift.process(icBcTemplate,
                                     "-p=BC_IS_NAME=${getAppName()}",
                                     "-p=DOCKER_REGISTRY=${env.DOCKER_REGISTRY}",
-                                    "-p=DOCKER_IMAGE_NAME=/dimssss/poc1",
-                                    "-p=DOCKER_IMAGE_TAG=latest",
+                                    "-p=DOCKER_IMAGE_NAME=/${env.DOCKER_IMAGE_PREFIX}/${GOVIL_APP_NAME}",
+                                    "-p=DOCKER_IMAGE_TAG=${getGitCommitShrotHash()}-${currentBuild.number}",
                                     "-p=GIT_REPO=${scm.getUserRemoteConfigs()[0].getUrl()}",
-                                    "-p=GIT_REF=master",
-                                    "-p=S2I_BUILDER_ISTAG=python:3.6"
+                                    "-p=GIT_REF=${env.BRANCH_NAME}",
+                                    "-p=S2I_BUILDER_ISTAG=${env.S2I_BUILD_IMAGE}"
                             )
-//                            def json = JsonOutput.toJson(models)
                             echo "${JsonOutput.prettyPrint(JsonOutput.toJson(models))}"
-                            //if you need pretty print (multiline) json
-
                             openshift.create(models)
-//                            echo "${env.JOB_NAME}"
-//                            def jobName = getJobName()
-//                            getAppName()
                             echo "${getAppName()}"
                             echo "${env.DOCKER_REGISTRY}"
                         }

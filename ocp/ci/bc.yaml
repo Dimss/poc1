@@ -10,6 +10,12 @@ spec:
     jenkinsPipelineStrategy:
       jenkinsfile:
       env:
+      - name: "GOVIL_APP_NAME"
+        value: "poc1-producer"
+      - name: "S2I_BUILD_IMAGE"
+        value: "python:3.6"
+      - name: "DOCKER_IMAGE_PREFIX"
+        value: "dimssss"
       - name: "DOCKER_REGISTRY"
         value: "docker.io"
     type: JenkinsPipeline
