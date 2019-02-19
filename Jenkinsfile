@@ -105,6 +105,7 @@ pipeline {
                             echo "${env.DOCKER_REGISTRY}"
 
                             echo "${env.BRANCH_NAME}"
+                            echo "${env.BRANCH_NAME}"
 
                         }
                     }
