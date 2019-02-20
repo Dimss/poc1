@@ -6,7 +6,7 @@ spec:
   source:
     git:
       uri: "https://github.com/Dimss/poc1.git"
-      ref: "*/**  "
+      ref: "*/**"
   strategy:
     jenkinsPipelineStrategy:
       jenkinsfile:
