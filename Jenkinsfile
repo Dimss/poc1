@@ -109,7 +109,7 @@ pipeline {
                             def scmVars = checkout scm
                             echo "${scmVars}"
                             def tag = sh(returnStdout: true, script: "git tag --contains").trim()
-                            echo ${tag}
+                            echo "${tag}"
 //                            sh(returnStdout: true, script: "git tag --points-at")
 
 
