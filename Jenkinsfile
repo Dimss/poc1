@@ -18,7 +18,7 @@ def getGitCommitShrotHash() {
 }
 
 pipeline {
-    agnet any
+    agent any
 //    agent {
 //        node {
 //            label 'python36'
