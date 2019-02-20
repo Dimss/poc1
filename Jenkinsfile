@@ -20,7 +20,8 @@ def getGitCommitShrotHash() {
 pipeline {
     agent {
         node {
-            label 'python36'
+//            label 'python36'
+            label 'any'
         }
     }
     stages {
@@ -105,7 +106,8 @@ pipeline {
                             echo "${env.DOCKER_REGISTRY}"
 
                             echo "${env.BRANCH_NAME}"
-                            echo "${checkout(scm)}"
+                            def scmVars = checkout scm
+                            echo "${scmVars}"
 
 
 
