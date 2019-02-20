@@ -106,8 +106,8 @@ pipeline {
                             echo "${env.DOCKER_REGISTRY}"
 
                             echo "${env.BRANCH_NAME}"
-                            def scmVars = checkout scm
-                            echo "${scmVars}"
+                            echo "${scm.branches[0].name}"
+                            echo "${scm.branches[0]}"
 
 
 
