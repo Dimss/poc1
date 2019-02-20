@@ -108,8 +108,8 @@ pipeline {
                             echo "${env.BRANCH_NAME}"
                             def scmVars = checkout scm
                             echo "${scmVars}"
-                            def TAG_NAME = binding.variables.get("TAG_NAME")
-                            echo "${TAG_NAME}"
+                            def tag = sh(returnStdout: true, script: "git tag --contains").trim()
+                            echo ${tag}
 //                            sh(returnStdout: true, script: "git tag --points-at")
 
 
