@@ -18,12 +18,12 @@ def getGitCommitShrotHash() {
 }
 
 pipeline {
-    agent {
-        node {
+    agnet any
+//    agent {
+//        node {
 //            label 'python36'
-            label 'any'
-        }
-    }
+//        }
+//    }
     stages {
 //        stage("Install PIP dependencies") {
 //            steps {
