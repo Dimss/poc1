@@ -21,6 +21,9 @@ spec:
         value: "docker.io"
     type: JenkinsPipeline
   triggers:
+#  - gitlab:
+#      secret: YGFThSmhjrYdAjGeAVw4
+#    type: "GitLab"
   - generic:
       allowEnv: true
       secret: YGFThSmhjrYdAjGeAVw4
