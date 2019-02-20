@@ -6,6 +6,7 @@ spec:
   source:
     git:
       uri: "https://github.com/Dimss/poc1.git"
+      ref: "**"
   strategy:
     jenkinsPipelineStrategy:
       jenkinsfile:
@@ -19,3 +20,7 @@ spec:
       - name: "DOCKER_REGISTRY"
         value: "docker.io"
     type: JenkinsPipeline
+  triggers:
+  - github:
+      secret: YGFThSmhjrYdAjGeAVw4
+    type: GitHub
