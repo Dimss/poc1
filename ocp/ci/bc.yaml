@@ -1,7 +1,7 @@
 kind: "BuildConfig"
 apiVersion: "v1"
 metadata:
-  name: "poc1-producer"
+  name: "poc1-producer "
 spec:
   source:
     git:
