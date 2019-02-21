@@ -136,8 +136,8 @@ pipeline {
                             echo "${env.gitlabActionType}"
                             echo "${env.gitlabBranch}"
                             echo "==========================="
-//                            echo "============ THIS IS MASTER PUSH ==============="
-//                            echo "==========================="
+                            echo "============ THIS IS MASTER PUSH - I GONNA BACK TO THIS ONE WITH GIT TAG ==========="
+                            echo "==========================="
 
 //                            sh(returnStdout: true, script: "git tag --points-at")
 
