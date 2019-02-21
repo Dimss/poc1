@@ -10,45 +10,41 @@ def getJobName() {
 }
 
 def getAppName() {
-    return "${getJobName()}-${getGitCommitShrotHash()}"
+    return "${getJobName()}-${getGitCommitShortHash()}"
 }
 
-def getGitCommitShrotHash() {
+def getGitCommitShortHash() {
     return checkout(scm).GIT_COMMIT.substring(0, 7)
 }
 
+def getDockerImageTag() {
+    if (env.gitlabActionType == "TAG_PUSH") {
+        return "${env.gitlabSourceBranch}"
+    } else {
+        return "${getGitCommitShortHash()}-${currentBuild.number}"
+    }
+
+}
+
 pipeline {
-    agent any
-//    agent {
-//        node {
-//            label 'python36'
-//        }
-//    }
+
+    agent {
+        node {
+            label 'python36'
+        }
+    }
     stages {
         stage('Checkout GIT Tag (in case it was pushed) ') {
 
             steps {
                 script {
                     if (env.gitlabActionType == "TAG_PUSH") {
-                        echo "************************************"
-                        echo "${env.gitlabSourceBranch}"
-                        echo "Git tag is pushed, building from the TAG ref "
-                        echo "************************************"
-//                        checkout scm: [
-//                                $class           : 'GitSCM',
-//                                userRemoteConfigs: [[url: src]],
-//                                branches         : [[name: "${env.gitlabSourceBranch}"]]
-//                        ], poll: false
                         checkout poll: false, scm: [
                                 $class                           : 'GitSCM',
                                 branches                         : [[name: "${env.gitlabSourceBranch}"]],
                                 doGenerateSubmoduleConfigurations: false,
                                 submoduleCfg                     : [],
                         ]
-                        echo "*************************"
-                        sh " git log  -n 1"
-
-                        echo "*************************"
                     }
                 }
             }
@@ -118,38 +114,37 @@ pipeline {
                 script {
                     openshift.withCluster() {
                         openshift.withProject() {
-                            def ciTestFile = readFile('ocp/ci/ci_test.txt')
-                            echo "${ciTestFile}"
-//                            def icBcTemplate = readFile('ocp/ci/app-is-bc.yaml')
-//                            def models = openshift.process(icBcTemplate,
-//                                    "-p=BC_IS_NAME=${getAppName()}",
-//                                    "-p=DOCKER_REGISTRY=${env.DOCKER_REGISTRY}",
-//                                    "-p=DOCKER_IMAGE_NAME=/${env.DOCKER_IMAGE_PREFIX}/${GOVIL_APP_NAME}",
-//                                    "-p=DOCKER_IMAGE_TAG=${getGitCommitShrotHash()}-${currentBuild.number}",
-//                                    "-p=GIT_REPO=${scm.getUserRemoteConfigs()[0].getUrl()}",
+                            def icBcTemplate = readFile('ocp/ci/app-is-bc.yaml')
+                            def models = openshift.process(icBcTemplate,
+                                    "-p=BC_IS_NAME=${getAppName()}",
+                                    "-p=DOCKER_REGISTRY=${env.DOCKER_REGISTRY}",
+                                    "-p=DOCKER_IMAGE_NAME=/${env.DOCKER_IMAGE_PREFIX}/${GOVIL_APP_NAME}",
+                                    "-p=DOCKER_IMAGE_TAG=${getGitCommitShortHash()}-${currentBuild.number}",
+                                    "-p=GIT_REPO=${scm.getUserRemoteConfigs()[0].getUrl()}",
 //                                    "-p=GIT_REF=${env.BRANCH_NAME}",
-//                                    "-p=S2I_BUILDER_ISTAG=${env.S2I_BUILD_IMAGE}"
-//                            )
-//                            echo "${JsonOutput.prettyPrint(JsonOutput.toJson(models))}"
+                                    "-p=GIT_REF=${env.gitlabSourceBranch}",
+                                    "-p=S2I_BUILDER_ISTAG=${env.S2I_BUILD_IMAGE}"
+                            )
+                            echo "${JsonOutput.prettyPrint(JsonOutput.toJson(models))}"
 //                            openshift.create(models)
-                            echo "${getAppName()}"
-                            echo "${env.DOCKER_REGISTRY}"
-
-                            echo "${env.BRANCH_NAME}"
-                            def scmVars = checkout scm
-                            echo "${scmVars}"
-                            def tag = sh(returnStdout: true, script: "git tag --contains").trim()
-                            echo "==========================="
-                            echo "${tag}"
-                            echo "${env.gitlabBranch}"
-                            echo sh(returnStdout: true, script: 'env')
-                            echo "==========================="
-                            echo "${env.gitlabActionType}"
-                            echo "${env.gitlabBranch}"
-                            echo "==========================="
-                            echo "============ THIS IS MASTER PUSH - I GONNA BACK TO THIS ONE WITH GIT TAG ==========="
-                            echo "=============THIS IS A NEW VERSION, DEV IS MOVING ON=============="
-                            echo "=============THIS IS A NEW VERSION, DEV IS and on MOVING ON=============="
+//                            echo "${getAppName()}"
+//                            echo "${env.DOCKER_REGISTRY}"
+//
+//                            echo "${env.BRANCH_NAME}"
+//                            def scmVars = checkout scm
+//                            echo "${scmVars}"
+//                            def tag = sh(returnStdout: true, script: "git tag --contains").trim()
+//                            echo "==========================="
+//                            echo "${tag}"
+//                            echo "${env.gitlabBranch}"
+//                            echo sh(returnStdout: true, script: 'env')
+//                            echo "==========================="
+//                            echo "${env.gitlabActionType}"
+//                            echo "${env.gitlabBranch}"
+//                            echo "==========================="
+//                            echo "============ THIS IS MASTER PUSH - I GONNA BACK TO THIS ONE WITH GIT TAG ==========="
+//                            echo "=============THIS IS A NEW VERSION, DEV IS MOVING ON=============="
+//                            echo "=============THIS IS A NEW VERSION, DEV IS and on MOVING ON=============="
 
 //                            sh(returnStdout: true, script: "git tag --points-at")
 
