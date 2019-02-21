@@ -31,12 +31,12 @@ pipeline {
                 echo "************************************"
                 echo "${env.gitlabSourceBranch}"
                 echo "************************************"
-//                checkout changelog: true, poll: true, scm: [
-//                        $class                           : 'GitSCM',
-//                        branches                         : [[name: "origin/${env.gitlabSourceBranch}"]],
-//                        doGenerateSubmoduleConfigurations: false,
-//                        submoduleCfg                     : [],
-//                ]
+                checkout changelog: true, poll: true, scm: [
+                        $class                           : 'GitSCM',
+                        branches                         : [[name: "origin/${env.gitlabSourceBranch}"]],
+                        doGenerateSubmoduleConfigurations: false,
+                        submoduleCfg                     : [],
+                ]
             }
         }
 //        stage("Install PIP dependencies") {
