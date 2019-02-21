@@ -1,7 +1,7 @@
 import groovy.json.JsonOutput
 
 def getJobName() {
-    jobNameList = env.JOB_NAME.split("/")
+    def jobNameList = env.JOB_NAME.split("/")
     if (jobNameList.size() > 0) {
         return jobNameList[jobNameList.size() - 1]
     } else {
@@ -19,7 +19,8 @@ def getGitCommitShortHash() {
 
 def getDockerImageTag() {
     if (env.gitlabActionType == "TAG_PUSH") {
-        return "${env.gitlabSourceBranch}"
+        def dockerTag = env.gitlabActionType.split("/")
+        return dockerTag[dockerTag.size() - 1]
     } else {
         return "${getGitCommitShortHash()}-${currentBuild.number}"
     }
