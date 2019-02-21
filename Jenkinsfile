@@ -47,8 +47,7 @@ pipeline {
                         ]
                         echo "*************************"
                         sh " git log  -n 1"
-                        def ciTestFile = readFile('ocp/ci/ci_test.txt')
-                        echo "${ciTestFile}"
+
                         echo "*************************"
                     }
                 }
@@ -119,6 +118,8 @@ pipeline {
                 script {
                     openshift.withCluster() {
                         openshift.withProject() {
+                            def ciTestFile = readFile('ocp/ci/ci_test.txt')
+                            echo "${ciTestFile}"
 //                            def icBcTemplate = readFile('ocp/ci/app-is-bc.yaml')
 //                            def models = openshift.process(icBcTemplate,
 //                                    "-p=BC_IS_NAME=${getAppName()}",
