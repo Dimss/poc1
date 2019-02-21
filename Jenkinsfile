@@ -34,12 +34,20 @@ pipeline {
                         echo "${env.gitlabSourceBranch}"
                         echo "Git tag is pushed, building from the TAG ref"
                         echo "************************************"
-                        checkout changelog: true, poll: true, scm: [
+//                        checkout scm: [
+//                                $class           : 'GitSCM',
+//                                userRemoteConfigs: [[url: src]],
+//                                branches         : [[name: "${env.gitlabSourceBranch}"]]
+//                        ], poll: false
+                        checkout poll: false, scm: [
                                 $class                           : 'GitSCM',
                                 branches                         : [[name: "${env.gitlabSourceBranch}"]],
                                 doGenerateSubmoduleConfigurations: false,
                                 submoduleCfg                     : [],
                         ]
+                        echo "*************************"
+                        sh " git log  -n 1"
+                        echo "*************************"
                     }
                 }
             }
