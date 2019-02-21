@@ -19,7 +19,6 @@ spec:
         value: "dimssss"
       - name: "DOCKER_REGISTRY"
         value: "docker.io"
-      - name: "gitlabBranch"
 
     type: JenkinsPipeline
   triggers:
