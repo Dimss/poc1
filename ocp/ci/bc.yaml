@@ -5,7 +5,7 @@ metadata:
 spec:
   source:
     git:
-      uri: "http://gitlab.gov.il/root/poc1-producer.git"
+      uri: "http://10.166.0.11/root/poc1-producer.git"
       ref: "master"
   strategy:
     jenkinsPipelineStrategy:

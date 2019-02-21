@@ -114,6 +114,8 @@ pipeline {
                             echo "${env.gitlabBranch}"
                             echo sh(returnStdout: true, script: 'env')
                             echo "==========================="
+                            echo "${env.gitlabActionType}"
+                            echo "${env.gitlabSourceBranch}"
                             echo "==========================="
 
 
