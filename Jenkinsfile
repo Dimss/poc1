@@ -29,7 +29,7 @@ def getDockerImageTag() {
 pipeline {
     agent {
         node {
-            label 'nodejs'
+            label 'python36'
         }
     }
     stages {
