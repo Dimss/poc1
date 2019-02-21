@@ -25,6 +25,18 @@ pipeline {
 //        }
 //    }
     stages {
+        stage('Checkout code') {
+            steps {
+                checkout changelog: true, poll: true, scm: [
+                        $class                           : 'GitSCM',
+                        branches                         : [[name: "origin/${env.gitlabSourceBranch}"]],
+                        doGenerateSubmoduleConfigurations: false,
+//                        extensions                       : [[$class: 'PreBuildMerge', options: [fastForwardMode: 'FF', mergeRemote: 'origin', mergeStrategy: 'DEFAULT', mergeTarget: "${env.gitlabTargetBranch}"]]],
+                        submoduleCfg                     : [],
+//                        userRemoteConfigs                : [[name: 'origin', url: 'git@gitlab.example.com:foo/testrepo.git']]
+                ]
+            }
+        }
 //        stage("Install PIP dependencies") {
 //            steps {
 //                script {
@@ -115,9 +127,8 @@ pipeline {
                             echo sh(returnStdout: true, script: 'env')
                             echo "==========================="
                             echo "${env.gitlabActionType}"
-                            echo "${env.gitlabSourceBranch}"
+                            echo "${env.gitlabBranch}"
                             echo "==========================="
-
 
 //                            sh(returnStdout: true, script: "git tag --points-at")
 
