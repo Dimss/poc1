@@ -47,6 +47,8 @@ pipeline {
                         ]
                         echo "*************************"
                         sh " git log  -n 1"
+                        def ciTestFile = readFile('ocp/ci/ci_test.txt')
+                        echo "${ciTestFile}"
                         echo "*************************"
                     }
                 }
