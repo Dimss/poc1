@@ -112,6 +112,7 @@ pipeline {
                             echo "==========================="
                             echo "${tag}"
                             echo "${env.gitlabBranch}"
+                            echo sh(returnStdout: true, script: 'env')
                             echo "==========================="
 
 
