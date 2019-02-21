@@ -33,7 +33,8 @@ pipeline {
                 echo "************************************"
                 checkout changelog: true, poll: true, scm: [
                         $class                           : 'GitSCM',
-                        branches                         : [[name: "origin/${env.gitlabSourceBranch}"]],
+//                        branches                         : [[name: "origin/${env.gitlabSourceBranch}"]],
+                        branches                         : [[name: "${env.gitlabSourceBranch}"]],
                         doGenerateSubmoduleConfigurations: false,
                         submoduleCfg                     : [],
                 ]
