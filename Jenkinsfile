@@ -27,7 +27,6 @@ def getDockerImageTag() {
 }
 
 pipeline {
-
     agent {
         node {
             label 'python36'
