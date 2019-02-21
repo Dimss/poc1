@@ -60,65 +60,65 @@ pipeline {
                 }
             }
         }
-//        stage("Install PIP dependencies") {
-//            steps {
-//                script {
-//                    sh "pipenv install"
-//                }
-//            }
-//        }
-//        stage("Deploy tests infra dependencies") {
-//            steps {
-//                script {
-//                    openshift.withCluster() {
-//                        openshift.withProject() {
-//                            def testDepTemplate = readFile('ocp/ci/unittests-resources-template.yaml')
-//                            env.shortCommit = checkout(scm).GIT_COMMIT.substring(0, 7)
-//                            env.rabbitmqName = "rabbitmq-${env.shortCommit}"
-//                            def models = openshift.process(testDepTemplate, "-p=RABBITMQ_NAME=${rabbitmqName}")
-//                            openshift.create(models)
-//                            def deployment = openshift.selector("deployment/${rabbitmqName}")
-//                            deployment.untilEach(1) {
-//                                echo "${it.object()}"
-//                                return it.object().status.readyReplicas == 1
-//                            }
-//                            echo "${deployment}"
-//                            echo "${models}"
-//                            echo "${env.shortCommit}"
-//                            echo "${currentBuild.number}"
-//
-//                        }
-//                    }
-//
-//                }
-//            }
-//        }
-//        stage("Run tests") {
-//            steps {
-//                script {
-//                    sh """
-//                        echo PROFILE=prod >.env
-//                        echo RABBITMQ_IP="${env.rabbitmqName}" >>.env
-//                        echo RABBITMQ_QUEUE="sites-${env.shortCommit}" >>.env
-//                        pipenv run test
-//                    """
-//                }
-//            }
-//        }
-//
-//        stage("Cleanup test resources") {
-//            steps {
-//                script {
-//                    openshift.withCluster() {
-//                        openshift.withProject() {
-//                            def testDepTemplate = readFile('ocp/ci/unittests-resources-template.yaml')
-//                            def models = openshift.process(testDepTemplate, "-p=RABBITMQ_NAME=${env.rabbitmqName}")
-//                            openshift.delete(models)
-//                        }
-//                    }
-//                }
-//            }
-//        }
+        stage("Install PIP dependencies") {
+            steps {
+                script {
+                    sh "pipenv install"
+                }
+            }
+        }
+        stage("Deploy tests infra dependencies") {
+            steps {
+                script {
+                    openshift.withCluster() {
+                        openshift.withProject() {
+                            def testDepTemplate = readFile('ocp/ci/unittests-resources-template.yaml')
+                            env.shortCommit = checkout(scm).GIT_COMMIT.substring(0, 7)
+                            env.rabbitmqName = "rabbitmq-${env.shortCommit}"
+                            def models = openshift.process(testDepTemplate, "-p=RABBITMQ_NAME=${rabbitmqName}")
+                            openshift.create(models)
+                            def deployment = openshift.selector("deployment/${rabbitmqName}")
+                            deployment.untilEach(1) {
+                                echo "${it.object()}"
+                                return it.object().status.readyReplicas == 1
+                            }
+                            echo "${deployment}"
+                            echo "${models}"
+                            echo "${env.shortCommit}"
+                            echo "${currentBuild.number}"
+
+                        }
+                    }
+
+                }
+            }
+        }
+        stage("Run tests") {
+            steps {
+                script {
+                    sh """
+                        echo PROFILE=prod >.env
+                        echo RABBITMQ_IP="${env.rabbitmqName}" >>.env
+                        echo RABBITMQ_QUEUE="sites-${env.shortCommit}" >>.env
+                        pipenv run test
+                    """
+                }
+            }
+        }
+
+        stage("Cleanup test resources") {
+            steps {
+                script {
+                    openshift.withCluster() {
+                        openshift.withProject() {
+                            def testDepTemplate = readFile('ocp/ci/unittests-resources-template.yaml')
+                            def models = openshift.process(testDepTemplate, "-p=RABBITMQ_NAME=${env.rabbitmqName}")
+                            openshift.delete(models)
+                        }
+                    }
+                }
+            }
+        }
 
         stage("Create S2I image stream and build configs") {
             steps {
@@ -132,7 +132,6 @@ pipeline {
                                     "-p=DOCKER_IMAGE_NAME=/${env.DOCKER_IMAGE_PREFIX}/${GOVIL_APP_NAME}",
                                     "-p=DOCKER_IMAGE_TAG=${getDockerImageTag()}",
                                     "-p=GIT_REPO=${scm.getUserRemoteConfigs()[0].getUrl()}",
-//                                    "-p=GIT_REF=${env.BRANCH_NAME}",
                                     "-p=GIT_REF=${env.gitlabSourceBranch}",
                                     "-p=S2I_BUILDER_ISTAG=${env.S2I_BUILD_IMAGE}"
                             )
@@ -142,28 +141,6 @@ pipeline {
                             def build = bc.startBuild()
                             build.logs("-f")
                             openshift.delete(models)
-//                            echo "${getAppName()}"
-//                            echo "${env.DOCKER_REGISTRY}"
-//
-//                            echo "${env.BRANCH_NAME}"
-//                            def scmVars = checkout scm
-//                            echo "${scmVars}"
-//                            def tag = sh(returnStdout: true, script: "git tag --contains").trim()
-//                            echo "==========================="
-//                            echo "${tag}"
-//                            echo "${env.gitlabBranch}"
-//                            echo sh(returnStdout: true, script: 'env')
-//                            echo "==========================="
-//                            echo "${env.gitlabActionType}"
-//                            echo "${env.gitlabBranch}"
-//                            echo "==========================="
-//                            echo "============ THIS IS MASTER PUSH - I GONNA BACK TO THIS ONE WITH GIT TAG ==========="
-//                            echo "=============THIS IS A NEW VERSION, DEV IS MOVING ON=============="
-//                            echo "=============THIS IS A NEW VERSION, DEV IS and on MOVING ON=============="
-
-//                            sh(returnStdout: true, script: "git tag --points-at")
-
-
                         }
                     }
                 }
