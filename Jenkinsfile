@@ -19,7 +19,7 @@ def getGitCommitShortHash() {
 
 def getDockerImageTag() {
     if (env.gitlabActionType == "TAG_PUSH") {
-        def dockerTag = env.gitlabActionType.split("/")
+        def dockerTag = env.gitlabSourceBranch.split("/")
         return dockerTag[dockerTag.size() - 1]
     } else {
         return "${getGitCommitShortHash()}-${currentBuild.number}"
