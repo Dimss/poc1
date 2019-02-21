@@ -26,8 +26,9 @@ pipeline {
 //    }
     stages {
         stage('Checkout code') {
-            echo "${env.gitlabSourceBranch}"
+
             steps {
+                echo "${env.gitlabSourceBranch}"
                 checkout changelog: true, poll: true, scm: [
                         $class                           : 'GitSCM',
                         branches                         : [[name: "origin/${env.gitlabSourceBranch}"]],
