@@ -25,19 +25,22 @@ pipeline {
 //        }
 //    }
     stages {
-        stage('Checkout code') {
+        stage('Checkout GIT Tag (in case it was pushed) ') {
 
             steps {
-                echo "************************************"
-                echo "${env.gitlabSourceBranch}"
-                echo "************************************"
-                checkout changelog: true, poll: true, scm: [
-                        $class                           : 'GitSCM',
-//                        branches                         : [[name: "origin/${env.gitlabSourceBranch}"]],
-                        branches                         : [[name: "${env.gitlabSourceBranch}"]],
-                        doGenerateSubmoduleConfigurations: false,
-                        submoduleCfg                     : [],
-                ]
+
+                if (env.gitlabActionType == "TAG_PUSH") {
+                    echo "************************************"
+                    echo "${env.gitlabSourceBranch}"
+                    echo "Git tag is pushed, building from the TAG ref"
+                    echo "************************************"
+                    checkout changelog: true, poll: true, scm: [
+                            $class                           : 'GitSCM',
+                            branches                         : [[name: "${env.gitlabSourceBranch}"]],
+                            doGenerateSubmoduleConfigurations: false,
+                            submoduleCfg                     : [],
+                    ]
+                }
             }
         }
 //        stage("Install PIP dependencies") {
