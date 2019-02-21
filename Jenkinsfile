@@ -112,6 +112,7 @@ pipeline {
                             echo "==========================="
                             echo "${tag}"
                             echo "==========================="
+                            echo "==========================="
 
 //                            sh(returnStdout: true, script: "git tag --points-at")
 
