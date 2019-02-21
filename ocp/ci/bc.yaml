@@ -5,7 +5,7 @@ metadata:
 spec:
   source:
     git:
-      uri: "https://gitlab.com/dimss/poc1-producer.git"
+      uri: "http://gitlab.gov.il/root/poc1-producer.git"
       ref: "master"
   strategy:
     jenkinsPipelineStrategy:
@@ -21,10 +21,10 @@ spec:
         value: "docker.io"
 
     type: JenkinsPipeline
-  triggers:
-  - gitlab:
-      secret: YGFThSmhjrYdAjGeAVw4
-    type: "GitLab"
+#  triggers:
+#  - gitlab:
+#      secret: YGFThSmhjrYdAjGeAVw4
+#    type: "GitLab"
 #  - generic:
 #      allowEnv: true
 #      secret: YGFThSmhjrYdAjGeAVw4
