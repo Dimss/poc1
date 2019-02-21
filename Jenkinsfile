@@ -126,7 +126,7 @@ pipeline {
                                     "-p=S2I_BUILDER_ISTAG=${env.S2I_BUILD_IMAGE}"
                             )
                             echo "${JsonOutput.prettyPrint(JsonOutput.toJson(models))}"
-//                            openshift.create(models)
+                            openshift.create(models)
 //                            echo "${getAppName()}"
 //                            echo "${env.DOCKER_REGISTRY}"
 //
