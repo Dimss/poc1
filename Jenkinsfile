@@ -31,9 +31,7 @@ pipeline {
                         $class                           : 'GitSCM',
                         branches                         : [[name: "origin/${env.gitlabSourceBranch}"]],
                         doGenerateSubmoduleConfigurations: false,
-//                        extensions                       : [[$class: 'PreBuildMerge', options: [fastForwardMode: 'FF', mergeRemote: 'origin', mergeStrategy: 'DEFAULT', mergeTarget: "${env.gitlabTargetBranch}"]]],
                         submoduleCfg                     : [],
-//                        userRemoteConfigs                : [[name: 'origin', url: 'git@gitlab.example.com:foo/testrepo.git']]
                 ]
             }
         }
@@ -128,6 +126,8 @@ pipeline {
                             echo "==========================="
                             echo "${env.gitlabActionType}"
                             echo "${env.gitlabBranch}"
+                            echo "==========================="
+                            echo "============ THIS IS MASTER PUSH ==============="
                             echo "==========================="
 
 //                            sh(returnStdout: true, script: "git tag --points-at")
