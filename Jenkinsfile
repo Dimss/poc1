@@ -28,18 +28,19 @@ pipeline {
         stage('Checkout GIT Tag (in case it was pushed) ') {
 
             steps {
-
-                if (env.gitlabActionType == "TAG_PUSH") {
-                    echo "************************************"
-                    echo "${env.gitlabSourceBranch}"
-                    echo "Git tag is pushed, building from the TAG ref"
-                    echo "************************************"
-                    checkout changelog: true, poll: true, scm: [
-                            $class                           : 'GitSCM',
-                            branches                         : [[name: "${env.gitlabSourceBranch}"]],
-                            doGenerateSubmoduleConfigurations: false,
-                            submoduleCfg                     : [],
-                    ]
+                script {
+                    if (env.gitlabActionType == "TAG_PUSH") {
+                        echo "************************************"
+                        echo "${env.gitlabSourceBranch}"
+                        echo "Git tag is pushed, building from the TAG ref"
+                        echo "************************************"
+                        checkout changelog: true, poll: true, scm: [
+                                $class                           : 'GitSCM',
+                                branches                         : [[name: "${env.gitlabSourceBranch}"]],
+                                doGenerateSubmoduleConfigurations: false,
+                                submoduleCfg                     : [],
+                        ]
+                    }
                 }
             }
         }
