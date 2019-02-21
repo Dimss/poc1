@@ -111,6 +111,7 @@ pipeline {
                             def tag = sh(returnStdout: true, script: "git tag --contains").trim()
                             echo "==========================="
                             echo "${tag}"
+                            echo "${env.gitlabBranch}"
                             echo "==========================="
 
 
