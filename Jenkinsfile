@@ -138,6 +138,10 @@ pipeline {
                             )
                             echo "${JsonOutput.prettyPrint(JsonOutput.toJson(models))}"
                             openshift.create(models)
+                            def bc = openshift.selector("buildconfig/${getAppName()}")
+                            def build = bc.startBuild()
+                            def results = build.logs("-f")
+                            echo "${results}"
 //                            echo "${getAppName()}"
 //                            echo "${env.DOCKER_REGISTRY}"
 //
