@@ -118,7 +118,7 @@ pipeline {
                                     "-p=BC_IS_NAME=${getAppName()}",
                                     "-p=DOCKER_REGISTRY=${env.DOCKER_REGISTRY}",
                                     "-p=DOCKER_IMAGE_NAME=/${env.DOCKER_IMAGE_PREFIX}/${GOVIL_APP_NAME}",
-                                    "-p=DOCKER_IMAGE_TAG=${getGitCommitShortHash()}-${currentBuild.number}",
+                                    "-p=DOCKER_IMAGE_TAG=${getDockerImageTag()}",
                                     "-p=GIT_REPO=${scm.getUserRemoteConfigs()[0].getUrl()}",
 //                                    "-p=GIT_REF=${env.BRANCH_NAME}",
                                     "-p=GIT_REF=${env.gitlabSourceBranch}",
