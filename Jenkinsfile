@@ -32,7 +32,7 @@ pipeline {
                     if (env.gitlabActionType == "TAG_PUSH") {
                         echo "************************************"
                         echo "${env.gitlabSourceBranch}"
-                        echo "Git tag is pushed, building from the TAG ref"
+                        echo "Git tag is pushed, building from the TAG ref "
                         echo "************************************"
 //                        checkout scm: [
 //                                $class           : 'GitSCM',
