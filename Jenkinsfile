@@ -114,6 +114,7 @@ pipeline {
                             echo "${env.gitlabBranch}"
                             echo sh(returnStdout: true, script: 'env')
                             echo "==========================="
+                            echo "==========================="
 
 
 //                            sh(returnStdout: true, script: "git tag --points-at")
