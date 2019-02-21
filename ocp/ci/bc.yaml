@@ -23,13 +23,13 @@ spec:
 
     type: JenkinsPipeline
   triggers:
-#  - gitlab:
-#      secret: YGFThSmhjrYdAjGeAVw4
-#    type: "GitLab"
-  - generic:
-      allowEnv: true
+  - gitlab:
       secret: YGFThSmhjrYdAjGeAVw4
-    type: Generic
+    type: "GitLab"
+#  - generic:
+#      allowEnv: true
+#      secret: YGFThSmhjrYdAjGeAVw4
+#    type: Generic
 
 #  - github:
 #      secret: YGFThSmhjrYdAjGeAVw4
