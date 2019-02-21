@@ -10,21 +10,32 @@ def getJobName() {
 }
 
 def getAppName() {
-    return "${getJobName()}-${getGitCommitShortHash()}"
+    if (env.gitlabActionType == "TAG_PUSH") {
+        return "${getJobName()}-${getGitTag()}"
+    } else {
+        return "${getJobName()}-${getGitCommitShortHash()}"
+    }
 }
 
 def getGitCommitShortHash() {
     return checkout(scm).GIT_COMMIT.substring(0, 7)
 }
 
+def getGitTag() {
+    if (env.gitlabActionType == "TAG_PUSH") {
+        def tagPathList = env.gitlabSourceBranch.split("/")
+        return tagPathList[tagPathList.size() - 1]
+    } else {
+        return ""
+    }
+}
+
 def getDockerImageTag() {
     if (env.gitlabActionType == "TAG_PUSH") {
-        def dockerTag = env.gitlabSourceBranch.split("/")
-        return dockerTag[dockerTag.size() - 1]
+        return getGitTag()
     } else {
         return "${getGitCommitShortHash()}-${currentBuild.number}"
     }
-
 }
 
 pipeline {
