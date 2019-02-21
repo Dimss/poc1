@@ -140,8 +140,7 @@ pipeline {
                             openshift.create(models)
                             def bc = openshift.selector("buildconfig/${getAppName()}")
                             def build = bc.startBuild()
-                            def results = build.logs("-f")
-                            echo "${results}"
+                            build.logs("-f")
 //                            echo "${getAppName()}"
 //                            echo "${env.DOCKER_REGISTRY}"
 //

@@ -2,3 +2,4 @@ pip3.6 install pipenv
 cp -r /tmp/src/ /opt/app-root/
 ls -all /opt/app-root/src
 pipenv install
+cat ocp/ci/test.txt
