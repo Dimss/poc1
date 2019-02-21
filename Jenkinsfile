@@ -26,6 +26,7 @@ pipeline {
 //    }
     stages {
         stage('Checkout code') {
+            echo "${env.gitlabSourceBranch}"
             steps {
                 checkout changelog: true, poll: true, scm: [
                         $class                           : 'GitSCM',
@@ -127,8 +128,8 @@ pipeline {
                             echo "${env.gitlabActionType}"
                             echo "${env.gitlabBranch}"
                             echo "==========================="
-                            echo "============ THIS IS MASTER PUSH ==============="
-                            echo "==========================="
+//                            echo "============ THIS IS MASTER PUSH ==============="
+//                            echo "==========================="
 
 //                            sh(returnStdout: true, script: "git tag --points-at")
 
