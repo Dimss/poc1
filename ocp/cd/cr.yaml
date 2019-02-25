@@ -1,0 +1,44 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+labels:
+  template: CR - POC1 Producer
+message: |-
+  POC1 Producer template
+metadata:
+  annotations:
+    description: |-
+      POC1 Producer template
+    iconClass: acorn
+    openshift.io/display-name: S2I docker builder
+  name: poc1producer-cr
+objects:
+- apiVersion: gov.il/v1alpha1
+  kind: Poc1Producer
+  metadata:
+    name: ${APP_NAME}
+    labels:
+      profile: ${PROFILE}
+  spec:
+    size: 1
+    depOwner: poc12
+    appName: ${APP_NAME}
+    image: ${IMAGE}
+    profile: ${PROFILE}
+    namespace: ${NAMESPACE}
+parameters:
+- description: Name of the app
+  displayName: The application name
+  name: APP_NAME
+  required: true
+- description: Runtime profile
+  displayName: Runtime profile
+  name: PROFILE
+  required: true
+- description: Docker image name
+  displayName: Docker image name
+  name: IMAGE
+  required: true
+- description: Namespace
+  displayName: OpenShift project name
+  name: NAMESPACE
+  required: true
