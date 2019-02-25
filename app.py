@@ -5,6 +5,7 @@ import requests
 import logging
 import sys
 import conf
+import time
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(host=conf.RABBITMQ_IP))
 channel = connection.channel()
@@ -24,6 +25,9 @@ def main():
 
     logging.info(" [x] Queue initialized")
     connection.close()
+    while True:
+        logging.info(" [x] Gonna sleep forever cuz I don't know what to do now")
+        time.sleep(10)
 
 
 if __name__ == "__main__":
