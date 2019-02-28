@@ -151,6 +151,7 @@ pipeline {
                         openshift.withProject() {
                             def poc12dep = openshift.selector("poc12dep")
                             echo "${poc12dep}"
+                            echo "${poc12dep.exists()}"
 
 
 //                            def size = 1
