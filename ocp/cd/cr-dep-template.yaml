@@ -1,7 +1,7 @@
 apiVersion: template.openshift.io/v1
 kind: Template
 labels:
-  template: CR - Poc12Dep
+  template: Poc12Dep
 message: |-
   Poc12Dep template
 metadata:
