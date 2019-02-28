@@ -30,6 +30,14 @@ def getGitTag() {
     }
 }
 
+def getProfile(){
+    if (env.gitlabActionType == "TAG_PUSH") {
+        return "lab"
+    } else {
+        return "dev"
+    }
+}
+
 def getDockerImageTag() {
     if (env.gitlabActionType == "TAG_PUSH") {
         return getGitTag()
@@ -42,8 +50,28 @@ def deployPoc12Dependency(){
     openshift.withCluster() {
         openshift.withProject() {
             def poc12dep = openshift.selector("poc12dep")
-            echo "${poc12dep}"
-            echo "${poc12dep.exists()}"
+            if (poc12dep.exists()){
+                return
+            }
+            def crDepTemplate = readFile('ocp/cd/cr-dep-template.yaml')
+            def appName = "poc12-rabbitmq-dev"
+            def profile = getProfile()
+            def image = "docker.io/rabbitmq:3-management"
+            def namespace = openshift.project()
+            def routeHostSuffix = "router.default.svc.cluster.local"
+            def queueName = "sites"
+
+            def models = openshift.process(crDepTemplate,
+                    "-p=APP_NAME=${appName}",
+                    "-p=NAMESPACE=${namespace}",
+                    "-p=IMAGE=${image}",
+                    "-p=ROUTE_HOST_SUFFIX=${routeHostSuffix}",
+                    "-p=QUEUE_NAME=${queueName}",
+                    "-p=PROFILE=${profile}")
+            echo "${JsonOutput.prettyPrint(JsonOutput.toJson(models))}"
+            openshift.create(models)
+
+
         }
     }
 }
