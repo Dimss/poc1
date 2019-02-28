@@ -1,7 +1,7 @@
 apiVersion: template.openshift.io/v1
 kind: Template
 labels:
-  template: CR - POC1 Producer
+  template: poc1producer
 message: |-
   POC1 Producer template
 metadata:
@@ -9,7 +9,7 @@ metadata:
     description: |-
       POC1 Producer template
     iconClass: acorn
-    openshift.io/display-name: CR - POC1 Producer
+    openshift.io/display-name: Poc1 Producer
   name: poc1producer-cr
 objects:
 - apiVersion: gov.il/v1alpha1
