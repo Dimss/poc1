@@ -81,7 +81,6 @@ def deployPoc1Producer(){
             def size = 1
             def appName = getAppName()
             def namespace = openshift.project()
-            def port = 8080
             def image = "${env.DOCKER_REGISTRY}/${env.DOCKER_IMAGE_PREFIX}/${GOVIL_APP_NAME}:${getDockerImageTag()}"
             def profile = getProfile()
             def crTemplate = readFile('ocp/cd/cr-app-template.yaml')
@@ -90,7 +89,7 @@ def deployPoc1Producer(){
                     "-p=APP_NAME=${appName}",
                     "-p=NAMESPACE=${namespace}",
                     "-p=IMAGE=${image}",
-                    "-p=PORT=${port}",
+                    "-p=depOwner=poc12",
                     "-p=PROFILE=${profile}")
             echo "${JsonOutput.prettyPrint(JsonOutput.toJson(models))}"
             openshift.create(models)
