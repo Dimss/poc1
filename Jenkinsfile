@@ -38,6 +38,16 @@ def getDockerImageTag() {
     }
 }
 
+def deployPoc12Dependency(){
+    openshift.withCluster() {
+        openshift.withProject() {
+            def poc12dep = openshift.selector("poc12dep")
+            echo "${poc12dep}"
+            echo "${poc12dep.exists()}"
+        }
+    }
+}
+
 pipeline {
     agent {
         node {
@@ -149,9 +159,10 @@ pipeline {
                 script {
                     openshift.withCluster() {
                         openshift.withProject() {
-                            def poc12dep = openshift.selector("poc12dep")
-                            echo "${poc12dep}"
-                            echo "${poc12dep.exists()}"
+                            deployPoc12Dependency()
+//                            def poc12dep = openshift.selector("poc12dep")
+//                            echo "${poc12dep}"
+//                            echo "${poc12dep.exists()}"
 
 
 //                            def size = 1
