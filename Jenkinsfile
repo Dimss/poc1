@@ -51,6 +51,7 @@ def deployPoc12Dependency(){
         openshift.withProject() {
             def poc12dep = openshift.selector("poc12dep")
             if (poc12dep.exists()){
+                echo "Dependency for Poc1Producer and Poc2Consumer already exists, gonna skip Pod12Dep creation"
                 return
             }
             def crDepTemplate = readFile('ocp/cd/cr-dep-template.yaml')
