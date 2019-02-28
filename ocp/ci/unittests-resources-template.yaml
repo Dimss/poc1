@@ -1,56 +1,57 @@
 apiVersion: template.openshift.io/v1
 kind: Template
 labels:
-  template: poc1-unittests-template
+  template: Poc1Producer
 message: |-
-  Unitetests resources template
+  Poc1Producer Custom Resource Template
 metadata:
+  name: poc1producer-cr
   annotations:
     description: |-
-      Unitetes resources template
-    iconClass: acorn
-    openshift.io/display-name: POC1 Unittests template
-  name: poc1-unittests-template
+      Poc1Producer Custom Resource Template
+    iconClass: fa fa-mixcloud
+    openshift.io/display-name: Poc1Producer
+    openshift.io/provider-display-name: GovIL-Poc1Producer by RH PS
+    tags: cr
 objects:
-- kind: Service
-  apiVersion: v1
+- apiVersion: gov.il/v1alpha1
+  kind: Poc1Producer
   metadata:
-    name: "${RABBITMQ_NAME}"
-  spec:
-    selector:
-      app: "${RABBITMQ_NAME}"
-    ports:
-    - name: "${RABBITMQ_NAME}"
-      port: 5672
-- kind: Deployment
-  apiVersion: apps/v1
-  metadata:
-    name: "${RABBITMQ_NAME}"
+    name: ${SERVICE_NAME}
     labels:
-      app: "${RABBITMQ_NAME}"
+      profile: ${PROFILE}
   spec:
-    replicas: 1
-    selector:
-      matchLabels:
-        app: "${RABBITMQ_NAME}"
-    template:
-      metadata:
-        labels:
-          app: "${RABBITMQ_NAME}"
-      spec:
-        containers:
-        - name: "rabbitmq"
-          image: "rabbitmq:latest"
-          ports:
-          - containerPort: 5672
-          readinessProbe:
-            tcpSocket:
-              port: 5672
-            initialDelaySeconds: 0
-            periodSeconds: 3
+    size: ${SIZE}
+    depOwner: poc12
+    appName: ${SERVICE_NAME}
+    image: ${IMAGE}
+    profile: ${PROFILE}
+    namespace: ${NAMESPACE}
 parameters:
-- description: RabbitMQ name
-  displayName: RabbitMQ name for Deployment and Service objects
-  name: RABBITMQ_NAME
+- description: Count of instaces
+  displayName: How many instaces should be deployed
+  name: SIZE
+  value: "1"
   required: true
-  value: :"rabbitmq"
+- description: Name of the Poc1Producer instace
+  displayName: This name will be used by all objects created by CR (pods,services,deployments, etc..)
+  name: ROUTE_NAME
+  required: true
+- description: Route name
+  displayName: Name of the OpenShift route object
+  name: NAMESPACE
+  required: true
+  value: govil
+- description: Poc1Producer image
+  displayName: Poc1Producer Docker image
+  name: IMAGE
+  required: true
+- description: Container port
+  displayName: Port number that should be exposed from container
+  name: PORT
+  required: true
+- description: Poc1Producer Profile
+  displayName: Poc1Producer profile  #dev/lab/prod
+  name: PROFILE
+  value: dev
+  required: true

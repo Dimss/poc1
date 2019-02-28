@@ -9,7 +9,7 @@ metadata:
     description: |-
       POC1 Producer template
     iconClass: acorn
-    openshift.io/display-name: S2I docker builder
+    openshift.io/display-name: CR - POC1 Producer
   name: poc1producer-cr
 objects:
 - apiVersion: gov.il/v1alpha1
@@ -19,16 +19,20 @@ objects:
     labels:
       profile: ${PROFILE}
   spec:
-    size: 1
-    depOwner: poc12
     appName: ${APP_NAME}
-    image: ${IMAGE}
+    size: ${SIZE}
     profile: ${PROFILE}
     namespace: ${NAMESPACE}
+    depOwner: poc12
+    image: ${IMAGE}
 parameters:
 - description: Name of the app
   displayName: The application name
   name: APP_NAME
+  required: true
+- description: Number of ReactSample instances to create
+  displayName: number of instacens
+  name: SIZE
   required: true
 - description: Runtime profile
   displayName: Runtime profile
