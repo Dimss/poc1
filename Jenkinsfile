@@ -185,6 +185,7 @@ pipeline {
                     openshift.withCluster() {
                         openshift.withProject() {
                             def icBcTemplate = readFile('ocp/ci/app-is-bc.yaml')
+                            echo "GIT_LAB_SOURCE_BRANCH: ${env.gitlabSourceBranch}"
                             def models = openshift.process(icBcTemplate,
                                     "-p=BC_IS_NAME=${getAppName()}",
                                     "-p=DOCKER_REGISTRY=${env.DOCKER_REGISTRY}",
