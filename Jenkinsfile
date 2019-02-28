@@ -150,7 +150,7 @@ pipeline {
                     openshift.withCluster() {
                         openshift.withProject() {
                             def poc12dep = openshift.selector("poc12dep")
-                            echo ${poc12dep}
+                            echo "${poc12dep}"
 
 
 //                            def size = 1
