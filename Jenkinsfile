@@ -159,7 +159,6 @@ pipeline {
                         echo PROFILE=prod >.env
                         echo RABBITMQ_IP="${env.rabbitmqName}" >>.env
                         echo RABBITMQ_QUEUE="sites-${env.shortCommit}" >>.env
-                        sleep 3600
                         pipenv run test
                     """
                 }
