@@ -89,7 +89,6 @@ def deployPoc1Producer(){
                     "-p=APP_NAME=${appName}",
                     "-p=NAMESPACE=${namespace}",
                     "-p=IMAGE=${image}",
-                    "-p=depOwner=poc12",
                     "-p=PROFILE=${profile}")
             echo "${JsonOutput.prettyPrint(JsonOutput.toJson(models))}"
             openshift.create(models)
@@ -120,6 +119,7 @@ pipeline {
                 }
             }
         }
+
         stage("Install PIP dependencies") {
             steps {
                 script {
@@ -127,6 +127,7 @@ pipeline {
                 }
             }
         }
+
         stage("Deploy tests infra dependencies") {
             steps {
                 script {
@@ -151,6 +152,7 @@ pipeline {
                 }
             }
         }
+
         stage("Run tests") {
             steps {
                 script {
@@ -184,7 +186,6 @@ pipeline {
                     openshift.withCluster() {
                         openshift.withProject() {
                             def icBcTemplate = readFile('ocp/ci/app-is-bc.yaml')
-                            echo "GIT_LAB_SOURCE_BRANCH: ${env.gitlabSourceBranch}"
                             def models = openshift.process(icBcTemplate,
                                     "-p=BC_IS_NAME=${getAppName()}",
                                     "-p=DOCKER_REGISTRY=${env.DOCKER_REGISTRY}",
@@ -205,6 +206,7 @@ pipeline {
                 }
             }
         }
+
         stage("Deploy to OpenShift") {
             steps {
                 script {
