@@ -143,6 +143,7 @@ pipeline {
                                 echo "${it.object()}"
                                 return it.object().status.readyReplicas == 1
                             }
+                            
                             echo "${deployment}"
                             echo "${models}"
                             echo "${env.shortCommit}"
